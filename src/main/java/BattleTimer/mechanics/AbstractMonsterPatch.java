@@ -1,12 +1,13 @@
 package BattleTimer.mechanics;
 
 import BattleTimer.core.BattleTimerCore;
-import BattleTimer.mechanics.constants.personalities.AbstractPersonality;
+import BattleTimer.mechanics.constants.personalities.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
@@ -24,30 +25,33 @@ public class AbstractMonsterPatch {
 
         public static float calculateTime(AbstractMonster __instance) {
             float f = 0;
-            float timer_lb = 0;
-            float timer_ub = 0;
-            switch (__instance.type){
-                case BOSS:
-                    f = TURN_TIMER_BOSS;
-                    timer_ub = 2;
-                    timer_lb = -5;
-                    break;
-                case ELITE:
-                    f = TURN_TIMER_ELITE;
-                    timer_ub = 3;
-                    timer_lb = - -4;
-                    break;
-                case NORMAL:
-                    f = TURN_TIMER_NORMAL;
-                    timer_ub = 3;
-                    timer_lb = - -3;
-                    break;
+            if(AbstractDungeon.isPlayerInDungeon()) {
+                AbstractPersonality currentPersonality;
+                switch (__instance.type) {
+                    case BOSS:
+                        f = TURN_TIMER_BOSS;
+                        break;
+                    case ELITE:
+                        f = TURN_TIMER_ELITE;
+                        break;
+                    case NORMAL:
+                        f = TURN_TIMER_NORMAL;
+                        break;
+                    default:
+                        f = TURN_TIMER_NORMAL;
+                        break;
+                }
+                if (AbstractDungeon.ascensionLevel <= 5) { currentPersonality = new VERYEASY();
+                } else if (AbstractDungeon.ascensionLevel <= 10) { currentPersonality = new EASY();
+                } else if (AbstractDungeon.ascensionLevel <= 15) { currentPersonality = new MEDIUM();
+                } else { currentPersonality = new VERYHARD(); }
+                for (int i = 1; i <= GameActionManager.turn; i += 1) {
+                    if (i % 2 == 0) { currentPersonality = currentPersonality.nextPersonality(); }
+                }
+                f += currentPersonality.calculateTimeValue();
             }
-            f += AbstractDungeon.monsterRng.random(timer_lb, timer_ub);
-            if (!(AbstractDungeon.ascensionLevel == 20)) { f /= 0.976; }
             return f;
         }
-
     }
 
     @SpirePatch(clz = AbstractMonster.class, method = SpirePatch.CONSTRUCTOR,
@@ -79,11 +83,7 @@ public class AbstractMonsterPatch {
     public static class timerRenderPatch {
         @SpirePostfixPatch
         public static void timerCtorPatch(AbstractMonster __instance, SpriteBatch sb) {
-            System.out.println("render bullshit " + __instance.name);
-            if(BattleTimerCore.hasMinions && __instance instanceof AbstractFriendlyMonster){
-                System.out.println("hi wtf");
-                return;
-            }
+            if(BattleTimerCore.hasMinions && __instance instanceof AbstractFriendlyMonster){ return; }
             DrawMonsterTimer.drawMonsterTimer(sb, __instance, patchIntoTimer.currentMonsterTimer.get(__instance),
                     patchIntoTimer.currentMaxMonsterTimer.get(__instance));
             if(!AbstractDungeon.isScreenUp) {
