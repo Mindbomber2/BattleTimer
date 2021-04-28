@@ -5,8 +5,8 @@
 
     <artifactId>BattleTimer</artifactId>
     <version>1</version>
-    <name>Spire Protocol</name>
-    <description>Prismriver is a mod that can replace vanilla Spire's music with any music you want.</description>
+    <name>Frantic Chronometer</name>
+    <description>Frantic Chronometer is a mod that makes all fights in the spire real-time.</description>
     <!-- Change the above for mod information. -->
 
     <properties>

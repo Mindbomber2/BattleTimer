@@ -46,6 +46,7 @@ public class I_Cant_Believe_Its_Not_AbstractMonsterPatch {
                 for (int i = 1; i <= GameActionManager.turn; i += 1) {
                     if (i % 2 == 0) { currentPersonality = currentPersonality.nextPersonality(); }
                 }
+                System.out.println(currentPersonality.toString());
                 f += currentPersonality.calculateTimeValue();
             }
             return f;
