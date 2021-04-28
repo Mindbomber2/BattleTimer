@@ -13,7 +13,7 @@ public class SkipMonsterTurnPatch {
     public static void skipMonsterTurn() {
             AbstractDungeon.actionManager.addToBottom(new SkipEnemiesTurnAction());
             TurnbasedPowerStuff.triggerEndOfTurnPowersOnPlayer();
-            AbstractDungeon.actionManager.addToBottom(new DelayCardQueueAction(3));
+            AbstractDungeon.actionManager.addToBottom(new DelayCardQueueAction(2.5f));
             AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
                 @Override
                 public void update() {
