@@ -2,6 +2,7 @@ package BattleTimer.mechanics;;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.watcher.SkipEnemiesTurnAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -13,5 +14,12 @@ public class SkipMonsterTurnPatch {
             AbstractDungeon.actionManager.addToBottom(new SkipEnemiesTurnAction());
             TurnbasedPowerStuff.triggerEndOfTurnPowersOnPlayer();
             AbstractDungeon.actionManager.addToBottom(new DelayCardQueueAction(3));
+            AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
+                @Override
+                public void update() {
+                    GameActionManager.turn += 1;
+                    isDone = true;
+                }
+            });
     }
 }
