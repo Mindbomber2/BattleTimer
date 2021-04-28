@@ -84,8 +84,10 @@ public class AbstractMonsterPatch {
         @SpirePostfixPatch
         public static void timerCtorPatch(AbstractMonster __instance, SpriteBatch sb) {
             if(BattleTimerCore.hasMinions && __instance instanceof AbstractFriendlyMonster){ return; }
-            DrawMonsterTimer.drawMonsterTimer(sb, __instance, patchIntoTimer.currentMonsterTimer.get(__instance),
-                    patchIntoTimer.currentMaxMonsterTimer.get(__instance));
+            if(!__instance.isDeadOrEscaped()) {
+                DrawMonsterTimer.drawMonsterTimer(sb, __instance, I_Cant_Believe_Its_Not_AbstractMonsterPatch.patchIntoTimer.currentMonsterTimer.get(__instance),
+                        I_Cant_Believe_Its_Not_AbstractMonsterPatch.patchIntoTimer.currentMaxMonsterTimer.get(__instance));
+            }
             if(!AbstractDungeon.isScreenUp) {
                 patchIntoTimer.currentMonsterTimer.set(__instance,
                         patchIntoTimer.currentMonsterTimer.get(__instance) - Gdx.graphics.getDeltaTime());

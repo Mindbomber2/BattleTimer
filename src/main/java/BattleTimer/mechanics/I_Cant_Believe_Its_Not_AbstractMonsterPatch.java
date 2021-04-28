@@ -83,8 +83,10 @@ public class I_Cant_Believe_Its_Not_AbstractMonsterPatch {
     public static class timerRenderPatch {
         @SpirePostfixPatch
         public static void timerCtorPatch(CustomMonster __instance, SpriteBatch sb) {
-            DrawMonsterTimer.drawMonsterTimer(sb, __instance, patchIntoTimer.currentMonsterTimer.get(__instance),
-                    patchIntoTimer.currentMaxMonsterTimer.get(__instance));
+            if(!__instance.isDeadOrEscaped()) {
+                DrawMonsterTimer.drawMonsterTimer(sb, __instance, patchIntoTimer.currentMonsterTimer.get(__instance),
+                        patchIntoTimer.currentMaxMonsterTimer.get(__instance));
+            }
             if(!AbstractDungeon.isScreenUp) {
                 patchIntoTimer.currentMonsterTimer.set(__instance,
                         patchIntoTimer.currentMonsterTimer.get(__instance) - Gdx.graphics.getDeltaTime());
