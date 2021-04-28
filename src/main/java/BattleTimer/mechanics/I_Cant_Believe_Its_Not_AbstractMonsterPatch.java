@@ -1,16 +1,18 @@
 package BattleTimer.mechanics;
 
-import BattleTimer.core.BattleTimerCore;
+import BattleTimer.mechanics.constants.personalities.*;
 import basemod.abstracts.CustomMonster;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
 
-import static BattleTimer.mechanics.battletimer_const.*;
+import java.util.ArrayList;
+
+import static BattleTimer.mechanics.constants.EnemyTimers.*;
 
 public class I_Cant_Believe_Its_Not_AbstractMonsterPatch {
 
@@ -21,27 +23,30 @@ public class I_Cant_Believe_Its_Not_AbstractMonsterPatch {
 
         public static float calculateTime(CustomMonster __instance) {
             float f = 0;
-            float timer_lb = 0;
-            float timer_ub = 0;
+            AbstractPersonality currentPersonality;
             switch (__instance.type){
                 case BOSS:
                     f = TURN_TIMER_BOSS;
-                    timer_ub = 2;
-                    timer_lb = -5;
                     break;
                 case ELITE:
                     f = TURN_TIMER_ELITE;
-                    timer_ub = 3;
-                    timer_lb = - -4;
                     break;
                 case NORMAL:
                     f = TURN_TIMER_NORMAL;
-                    timer_ub = 3;
-                    timer_lb = - -3;
+                    break;
+                default:
+                    f = TURN_TIMER_NORMAL;
                     break;
             }
-            f += AbstractDungeon.monsterRng.random(timer_lb, timer_ub);
-            if (!(AbstractDungeon.ascensionLevel == 20)) { f /= 0.976; }
+            if(AbstractDungeon.ascensionLevel <= 5){ currentPersonality = new VERYEASY(); }
+            else if(AbstractDungeon.ascensionLevel <= 10){ currentPersonality = new EASY(); }
+            else if(AbstractDungeon.ascensionLevel <= 15){ currentPersonality = new MEDIUM(); }
+            else { currentPersonality = new VERYHARD(); }
+            for(int i = 1; i <= GameActionManager.turn; i += 1){
+                if( i % 2 == 0){ currentPersonality = currentPersonality.nextPersonality(); }
+            }
+            f += currentPersonality.calculateTimeValue();
+            System.out.println(f);
             return f;
         }
 

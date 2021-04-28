@@ -1,6 +1,7 @@
 package BattleTimer.mechanics;
 
 import BattleTimer.core.BattleTimerCore;
+import BattleTimer.mechanics.constants.personalities.AbstractPersonality;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
@@ -9,7 +10,10 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import kobting.friendlyminions.monsters.AbstractFriendlyMonster;
-import static BattleTimer.mechanics.battletimer_const.*;
+
+import java.util.ArrayList;
+
+import static BattleTimer.mechanics.constants.EnemyTimers.*;
 
 public class AbstractMonsterPatch {
 
