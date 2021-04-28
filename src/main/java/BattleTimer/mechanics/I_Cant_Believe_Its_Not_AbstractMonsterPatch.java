@@ -20,11 +20,28 @@ public class I_Cant_Believe_Its_Not_AbstractMonsterPatch {
         public static SpireField<Float> currentMaxMonsterTimer = new SpireField<>(() -> 10f);
 
         public static float calculateTime(CustomMonster __instance) {
-            float f = __instance.type.equals(CustomMonster.EnemyType.BOSS) ? TURN_TIMER_BOSS : (__instance.type.equals(CustomMonster.EnemyType.ELITE) ? TURN_TIMER_ELITE : TURN_TIMER_NORMAL);
-            f += AbstractDungeon.monsterRng.random(__instance.type.equals(CustomMonster.EnemyType.BOSS) ? -6 : (__instance.type.equals(CustomMonster.EnemyType.ELITE) ? -4 : -1), __instance.type.equals(CustomMonster.EnemyType.BOSS) ? 0 : (__instance.type.equals(CustomMonster.EnemyType.ELITE) ? 2 : 2));
-            if (AbstractDungeon.ascensionLevel == 20) {
-                f /= 1.5f;
+            float f = 0;
+            float timer_lb = 0;
+            float timer_ub = 0;
+            switch (__instance.type){
+                case BOSS:
+                    f = TURN_TIMER_BOSS;
+                    timer_ub = 2;
+                    timer_lb = -5;
+                    break;
+                case ELITE:
+                    f = TURN_TIMER_ELITE;
+                    timer_ub = 3;
+                    timer_lb = - -4;
+                    break;
+                case NORMAL:
+                    f = TURN_TIMER_NORMAL;
+                    timer_ub = 3;
+                    timer_lb = - -3;
+                    break;
             }
+            f += AbstractDungeon.monsterRng.random(timer_lb, timer_ub);
+            if (!(AbstractDungeon.ascensionLevel == 20)) { f /= 0.976; }
             return f;
         }
 
