@@ -5,8 +5,8 @@
 
     <artifactId>BattleTimer</artifactId>
     <version>1</version>
-    <name>Frantic Chronometer</name>
-    <description>Frantic Chronometer is a mod that makes all fights in the spire real-time.</description>
+    <name>Fractal Chronometer</name>
+    <description>Fractal Chronometer is a mod that makes all fights in the spire real-time.</description>
     <!-- Change the above for mod information. -->
 
     <properties>
