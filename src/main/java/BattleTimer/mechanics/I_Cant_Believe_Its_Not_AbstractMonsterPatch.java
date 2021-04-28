@@ -40,15 +40,19 @@ public class I_Cant_Believe_Its_Not_AbstractMonsterPatch {
                         f = TURN_TIMER_NORMAL;
                         break;
                 }
-                if (AbstractDungeon.ascensionLevel <= 5) { currentPersonality = new VERYEASY();
-                } else if (AbstractDungeon.ascensionLevel <= 10) { currentPersonality = new EASY();
-                } else if (AbstractDungeon.ascensionLevel <= 15) { currentPersonality = new MEDIUM();
-                } else { currentPersonality = new VERYHARD(); }
+                if (AbstractDungeon.ascensionLevel <= 5) { currentPersonality = new MEDIUM();
+                } else if (AbstractDungeon.ascensionLevel <= 10) { currentPersonality = new HARD();
+                } else if (AbstractDungeon.ascensionLevel <= 15) { currentPersonality = new VERYHARD();
+                } else { currentPersonality = new INSANE(); }
                 for (int i = 1; i <= GameActionManager.turn; i += 1) {
                     if (i % 2 == 0) { currentPersonality = currentPersonality.nextPersonality(); }
                 }
-                System.out.println(currentPersonality.toString());
                 f += currentPersonality.calculateTimeValue();
+                try {
+                    if(AbstractDungeon.monsterRng.randomBoolean()){ f /= 1.5f; }
+                    else { f /= 1.45f; }
+                }
+                catch (Exception e){ f /= 1.45f; }
             }
             return f;
         }

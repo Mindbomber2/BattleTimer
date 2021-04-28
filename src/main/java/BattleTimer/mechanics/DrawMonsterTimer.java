@@ -1,9 +1,5 @@
 package BattleTimer.mechanics;;
 
-import BattleTimer.mechanics.constants.personalities.EASY;
-import BattleTimer.mechanics.constants.personalities.MEDIUM;
-import BattleTimer.mechanics.constants.personalities.VERYEASY;
-import BattleTimer.mechanics.constants.personalities.VERYHARD;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.Settings;
