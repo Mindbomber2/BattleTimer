@@ -83,10 +83,12 @@ public class AbstractMonsterPatch {
     public static class timerRenderPatch {
         @SpirePostfixPatch
         public static void timerCtorPatch(AbstractMonster __instance, SpriteBatch sb) {
-            if(BattleTimerCore.hasMinions && __instance instanceof AbstractFriendlyMonster){ return; }
-            if(!__instance.isDeadOrEscaped()) {
-                DrawMonsterTimer.drawMonsterTimer(sb, __instance, I_Cant_Believe_Its_Not_AbstractMonsterPatch.patchIntoTimer.currentMonsterTimer.get(__instance),
-                        I_Cant_Believe_Its_Not_AbstractMonsterPatch.patchIntoTimer.currentMaxMonsterTimer.get(__instance));
+            if (BattleTimerCore.hasMinions && __instance instanceof AbstractFriendlyMonster) { return; }
+            if (!__instance.isDying) {
+                if (!__instance.isEscaping) {
+                    DrawMonsterTimer.drawMonsterTimer(sb, __instance, I_Cant_Believe_Its_Not_AbstractMonsterPatch.patchIntoTimer.currentMonsterTimer.get(__instance),
+                            I_Cant_Believe_Its_Not_AbstractMonsterPatch.patchIntoTimer.currentMaxMonsterTimer.get(__instance));
+                }
             }
             if(!AbstractDungeon.isScreenUp) {
                 patchIntoTimer.currentMonsterTimer.set(__instance,
