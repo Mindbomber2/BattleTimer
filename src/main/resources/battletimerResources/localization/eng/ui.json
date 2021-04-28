@@ -1,0 +1,10 @@
+{
+  "${ModID}:OptionsMenu": {
+    "TEXT": [
+      "Revert to Default BGM",
+      "Activate Wildcard Mode (Pulls from all available MusicPacks)",
+      "Select MusicPack: %1$s",
+      "Next Page"
+    ]
+  }
+}
