@@ -39,7 +39,7 @@ public class BattleTimerCore implements OnCardUseSubscriber {
     public static String makeID(String idText) {
         return modID + ":" + idText;
     }
-    
+
     public BattleTimerCore() { BaseMod.subscribe(this); }
 
     public static String makePath(String resourcePath) {
@@ -56,7 +56,7 @@ public class BattleTimerCore implements OnCardUseSubscriber {
 
     @Override
     public void receiveCardUsed(AbstractCard abstractCard) {
-        AddDelayCardQueueAction.addDelayCardQueueAction();
+        //AddDelayCardQueueAction.addDelayCardQueueAction();
     }
 
     public void receiveEditStrings() {
